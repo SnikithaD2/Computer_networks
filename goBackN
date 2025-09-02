@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class GoBackN {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int windowSize, sent = 0, ack, i;
+        System.out.println("Enter window size:");
+        windowSize = sc.nextInt();
+
+        while (true) {
+            for (i = 0; i < windowSize; i++) {
+                System.out.println("Frame " + sent + " has been transmitted.");
+                sent++;
+                if (sent == windowSize)
+                    break;
+            }
+
+            System.out.println("\nPlease enter the last Acknowledgement received:");
+            ack = sc.nextInt();
+
+            if (ack == windowSize)
+                break;
+            else
+                sent = ack;
+        }
+
+        sc.close();
+    }
+}
