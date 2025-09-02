@@ -1,0 +1,25 @@
+import java.util.*;
+
+public class CharacterStuffing {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        char sd = sc.nextLine().charAt(0);
+        char ed = sc.nextLine().charAt(0);
+        StringBuilder sb = new StringBuilder();
+        sb.append(sd);
+        for (char ch : s.toCharArray()) {
+            if (ch == sd) {
+                sb.append(ch);
+                sb.append(sd);
+            } else if (ch == ed) {
+                sb.append(ch);
+                sb.append(ed);
+            } else {
+                sb.append(ch);
+            }
+        }
+        sb.append(ed);
+        System.out.println(sb.toString());
+    }
+}
