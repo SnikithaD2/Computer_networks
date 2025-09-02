@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class SimpleCRC {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter binary data to encode:");
+        String data = sc.next();
+
+        System.out.println("Choose CRC Polynomial:");
+        System.out.println("1. CRC-12 (x^12 + x^11 + x^3 + x^2 + x + 1)");
+        System.out.println("2. CRC-16 (x^16 + x^12 + x^5 + 1)");
+        int choice = sc.nextInt();
+
+        String poly = (choice == 1) ? "1100000001111" : "10001000000100001";
+
+        String codeword = generateCRC(data, poly);
+        System.out.println("Encoded data with CRC: " + codeword);
+
+        System.out.println("\nEnter received data to check for errors:");
+        String received = sc.next();
+
+        boolean error = checkCRC(received, poly);
+        if (error) {
+            System.out.println("Error detected in received data!");
+        } else {
+            System.out.println("No error detected. Data is correct.");
+        }
+    }
+
+    public static String generateCRC(String data, String poly) {
+        int n = poly.length();
+        String dividend = data + "0".repeat(n - 1);
+
+        char[] div = dividend.toCharArray();
+        char[] generator = poly.toCharArray();
+
+        for (int i = 0; i <= div.length - n; i++) {
+            if (div[i] == '1') {
+                for (int j = 0; j < n; j++) {
+                    div[i + j] = (div[i + j] == generator[j]) ? '0' : '1';
+                }
+            }
+        }
+
+        String remainder = new String(div).substring(div.length - (n - 1));
+        return data + remainder;
+    }
+
+    public static boolean checkCRC(String received, String poly) {
+        int n = poly.length();
+        char[] div = received.toCharArray();
+        char[] generator = poly.toCharArray();
+
+        for (int i = 0; i <= div.length - n; i++) {
+            if (div[i] == '1') {
+                for (int j = 0; j < n; j++) {
+                    div[i + j] = (div[i + j] == generator[j]) ? '0' : '1';
+                }
+            }
+        }
+
+        for (int i = div.length - (n - 1); i < div.length; i++) {
+            if (div[i] == '1') return true;
+        }
+        return false;
+    }
+}
