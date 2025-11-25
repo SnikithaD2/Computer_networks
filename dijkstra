@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class DijkstraEasy {
+    static final int INF = 9999;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of nodes: ");
+        int n = sc.nextInt();
+        int[][] g = new int[n][n];
+        System.out.println("Enter adjacency matrix:");
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                g[i][j] = sc.nextInt();
+        System.out.print("Enter starting node (0 to " + (n - 1) + "): ");
+        int start = sc.nextInt();
+        int[] dist = new int[n];
+        boolean[] vis = new boolean[n];
+        int[] par = new int[n];
+        Arrays.fill(dist, INF);
+        Arrays.fill(par, -1);
+        dist[start] = 0;
+        for (int k = 0; k < n - 1; k++) {
+            int u = -1, min = INF;
+            for (int i = 0; i < n; i++)
+                if (!vis[i] && dist[i] < min) { min = dist[i]; u = i; }
+            if (u == -1) break;
+            vis[u] = true;
+            for (int v = 0; v < n; v++)
+                if (g[u][v] != 0 && !vis[v] && dist[u] + g[u][v] < dist[v]) {
+                    dist[v] = dist[u] + g[u][v];
+                    par[v] = u;
+                }
+        }
+        System.out.println("\nShortest distances and paths from node " + start + ":");
+        for (int i = 0; i < n; i++) {
+            if (dist[i] == INF)
+                System.out.println("To node " + i + ": No path");
+            else {
+                System.out.print("To node " + i + ": " + dist[i] + ", Path: ");
+                printPath(par, i);
+                System.out.println();
+            }
+        }
+    }
+    static void printPath(int[] p, int j) {
+        if (p[j] == -1) System.out.print(j);
+        else { printPath(p, p[j]); System.out.print(" -> " + j); }
+    }
+}
