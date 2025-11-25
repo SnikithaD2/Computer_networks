@@ -1,0 +1,46 @@
+import java.net.*;
+import java.util.Scanner;
+
+public class BroadcastSimulation {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+       
+        System.out.print("Enter the subnet (e.g., 192.168.1.): ");
+        String subnet = scanner.nextLine();
+
+        System.out.print("Enter the starting host number (e.g., 1): ");
+        int startHost = scanner.nextInt();
+
+        System.out.print("Enter the ending host number (e.g., 254): ");
+        int endHost = scanner.nextInt();
+       
+        scanner.nextLine();
+        System.out.print("Enter the broadcast message: ");
+        String message = scanner.nextLine();
+
+        System.out.println("Starting broadcast...");
+
+        for (int i = startHost; i <= endHost; i++) {
+            String targetIP = subnet + i;
+            sendMessage(targetIP, message);
+        }
+
+        System.out.println("Broadcast completed!");
+
+        scanner.close();
+    }
+
+    public static void sendMessage(String targetIP, String message) {
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress targetAddress = InetAddress.getByName(targetIP);
+            byte[] messageBytes = message.getBytes();
+            DatagramPacket packet = new DatagramPacket(messageBytes, messageBytes.length, targetAddress, 9999);
+            socket.send(packet);
+            System.out.println("Message sent to: " + targetIP);
+            socket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
