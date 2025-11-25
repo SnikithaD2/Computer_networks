@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class LeakyBucket {
+    static final int BUCKET_SIZE = 512;
+
+    static void bktInput(int pktSize, int outRate) {
+        if (pktSize > BUCKET_SIZE) {
+            System.out.println("\n\t\tBucket overflow");
+        } else {
+            while (pktSize > outRate) {
+                System.out.println("\n\t\t" + outRate + " bytes outputted.");
+                pktSize -= outRate;
+            }
+            if (pktSize > 0)
+                System.out.println("\n\t\tLast " + pktSize + " bytes sent");
+            System.out.println("\n\t\tBucket output successful");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int outRate, pktSize;
+
+        System.out.print("Enter output rate: ");
+        outRate = sc.nextInt();
+
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("\nPacket no " + i);
+            System.out.print("Enter packet size: ");
+            pktSize = sc.nextInt();
+            bktInput(pktSize, outRate);
+        }
+
+        sc.close();
+    }
+}
