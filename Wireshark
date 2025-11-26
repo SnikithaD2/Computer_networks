@@ -1,0 +1,72 @@
+Wireshark
+Explain like you’re 7
+(letter) flying on the network and lets you read who sent it, who received it, and what type it is.
+
+Key features (child-simple)
+
+Capture real network packets live.
+
+Inspect packet content (source/destination, protocol, data).
+
+Apply filters to focus on specific traffic (only HTTP, only traffic to a host, etc.).
+
+Statistics: see conversation lists, protocol distributions, IO graphs.
+
+How to perform basic experiments on the PC (steps)
+
+Install Wireshark:
+
+Download from wireshark.org and install (Windows, macOS, Linux).
+
+Start Wireshark and choose the network interface (Wi-Fi or Ethernet) to capture on.
+
+Packet Capture:
+
+Click the interface and then the blue shark-fin button to start capturing.
+
+Let it run for a little while while you do some network activity (open a web page, ping, etc.).
+
+Click the red square to stop.
+
+Viewing captured traffic:
+
+Top pane: list of packets (time, source, dest, protocol, info).
+
+Middle pane: decoded protocol layers of selected packet.
+
+Bottom pane: raw bytes.
+
+Analysis & Statistics:
+
+Statistics → Protocol Hierarchy (shows % by protocol).
+
+Statistics → Conversations (who talked to whom).
+
+Statistics → IO Graphs (plot traffic over time).
+
+Filters:
+
+Capture filter (before capture) limits what is captured. Example: port 80 or host 192.168.1.5.
+
+Display filter (after capture) shows only packets you want. Example:
+
+Show only HTTP: http
+
+Show only TCP to a host: tcp && ip.dst == 192.168.1.10
+
+Show only packets from a host: ip.src == 192.168.1.5
+
+Useful filter examples
+
+ip.addr == 192.168.1.10 — packets where that IP is source or dest
+
+tcp.port == 80 — packets using TCP port 80
+
+icmp — only ping packets
+
+http — only HTTP requests/responses
+
+Short exam theory (write this)
+
+Wireshark is a network packet analyzer that captures and displays network traffic in real time. It helps in troubleshooting,
+protocol analysis, and security investigation by decoding packet contents and offering powerful filters and statistics to examine network behavior.
